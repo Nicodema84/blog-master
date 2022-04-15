@@ -1,0 +1,55 @@
+{% extends '../index.html' %}
+
+{% block texto %}
+
+<h3 class="m-5">Mis publicaciones:</h3>
+
+<div class="conteiner text-center">
+    {% for blog in blogs %}
+    <div class="text-center">
+
+        <h3>{{ blog.titulo }} <a href="{% url 'edit' blog.id %}" align="right"><i class="fas fa-edit"></i></a>
+        </h3> 
+
+        
+        <div class="w-50" style="margin-left: 500px;">
+            <img class="rounded mx-auto d-block w-10 img-thumbnail" style="margin-bottom: 20px;" align="left" src="media{{ blog.imagen.url }}">
+            <p>{{ blog.parrafo }}</p>
+            <h5 align="right">{{blog.fecha}}</h5>
+        </div>
+
+        <br>
+
+        <a href="" class="text-danger btn-eliminar-publicacion" obj-id="{{ blog.id }}">Eliminar</a>
+
+    
+        <hr class="bg-success w-50" style="margin-left: 500px;">
+
+        <h3>Comentarios:</h3>
+        <hr class="bg-success w-25" style="margin-left: 730px;">
+
+
+            {% for comentario in comentarios %}
+                {% if comentario.publicacion.id == blog.id %}
+                <section style="margin-left: 650px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-5 col-md-6 col-12 pb-4">
+                                <div class="text-justify darker mt-0 float-right"> 
+                                    <h4>{{comentario.autor}}</h4>
+                                    <p class="m-0">{{ comentario.comentario }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="" class="text-danger btn-eliminar" style="margin-right: 620px;" obj-id="{{ comentario.id }}" >Eliminar</a>
+                </section>
+                <hr class="bg-success w-25" style="margin-left: 730px;">
+                {% endif %}
+        
+            {% endfor %}
+
+    {% endfor %}
+        </div>
+</div>
+{% endblock texto %}

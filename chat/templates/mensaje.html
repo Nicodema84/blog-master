@@ -1,0 +1,23 @@
+{% extends "casilla.html" %}
+
+{% block texto %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="../../static/login.css">
+<div class="contenedor">
+    <div id="formContent">
+        <h2 style="margin-top: 0; color:grey; font-size: 17px;">{{ chat.emisor}}</h2>
+        <ul style="list-style: none; padding: 0%;" align="center">
+          <li class="m-4 text-primary">{{ chat.mensaje }}</li>
+          <form method="POST">
+            {% csrf_token %}
+            <h2 class="m-0" style="color:grey">Responder</h2>
+            <li><input type="text" class="" style="text-align: initial;" name="mensaje"></li>
+            <input type="hidden" name="receptor" value="{{ chat.emisor.user.id }}">
+            <input type="submit" class="m-1 bg-primary" style="background:primary; padding: 10px 50px">
+         </form>
+        </ul>
+        <br>
+    </div>
+</div>
+
+{% endblock %}

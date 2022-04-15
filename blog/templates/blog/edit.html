@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+
+{% block texto %}
+  
+<a href="{% url 'publicaciones' %}" class="m-3">volver</a> 
+<div class="text-center mb-2"><h2 class="text-success">Blog</h2></div>
+<div class="m-2 container-fluid" style= "width:100%;">
+    <div style="margin-left: 600px;">
+        <form method="POST" class="w-50">
+            {% csrf_token %}
+            <div class="form-group">
+            <h4 class="post-subtitle">Titulo:</h4>
+            <input type="text" class="form-control rounded-2" name="titulo" value="{{ blog.titulo }}">
+            </div>
+            <div class="form-group">
+            <h4 class="post-subtitle">Presentacion:</h4>
+            <input type="text" class="form-control rounded-2" name="presentacion" value="{{ blog.presentacion }}">
+            </div>
+            <div class="form-group">
+            <h4 for="exampleFormControlTextarea1">Contenido:</h4>
+            <textarea class="form-control rounded-2" name="contenido" id="exampleFormControlTextarea1" rows="5">{{ blog.parrafo }}</textarea>
+            </div>
+            <div class="form-group">
+            <h4 class="post-subtitle">Imagen:</h4>
+            <div class="row">
+                <img src="../../media{{ blog.imagen.url }}" class="rounded col img-edit" width="100" height="100"> 
+                <input type="file"  class=" m-1 rounded-2 bg-opacity-50 form-foto col" name="imagen">
+            </div>
+            </div>
+            <div class="text-center">
+            <button class="btn-success rounded-2 m-2" type="submit">Agregar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

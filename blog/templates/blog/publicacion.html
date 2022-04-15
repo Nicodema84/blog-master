@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+
+{% block texto %}
+<body class="row justify-content-center">
+<a href="{% url 'index' %}" style="margin-top: 0; margin-left: 20px;">Volver</a>
+<div class="row text-center">
+    <div class="text-center">
+        <h2>{{ blogs.titulo }}</h2>
+        <br>        
+        <h5>{{ blogs.presentacion }}</h5>
+        <div class="w-50" style="margin-left: 500px; margin-bottom: 0;">
+            <img class="rounded mx-auto d-block w-10 img-thumbnail" style="margin-bottom: 20px;" align="left" src="../../media{{ blogs.imagen.url }}">
+            <p class=" margin-bottom= 20px">
+            {{ blogs.parrafo }}
+            </p>
+            <p align="left">Autor: {{ blogs.autor }}<p>
+            <h5 align="right">{{blogs.fecha}}</h5>
+        </div>  
+
+
+    </div>
+    <br>
+    <h4 class="w-50" style="margin-left: 100px;">Comentarios:</h4>
+    <hr class="bg-success w-25" style="margin-left: 730px;">
+
+    {% for comentario in comentarios %}
+        {% if comentario.publicacion.id == blogs.id %}
+        <section>
+            <h4>{{comentario.autor}}</h4>
+            <p class="m-0">{{ comentario.comentario }}</p>
+            {% if comentario.autor.user.username == user.username %}
+            <a href="" class="text-danger btn-eliminar" obj-id="{{ comentario.id }}" >Eliminar</a>
+            {% endif %}
+        </section>
+        <hr class="bg-success w-25" style="margin-left: 730px;">
+        {% endif %}
+      
+    {% endfor %}
+
+    <div class="m-2 container-fluid" style= "width:100%;">
+        <div style="margin-left:500px;">
+            <form method="POST" style="width: 65%;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control rounded-2" placeholder="Ingrese un comentario" name="comentario" id="exampleFormControlTextarea1" rows="2"></textarea>
+                    <input type="hidden" name="idBlog" value="{{ blogs.id }}">
+                </div>
+                <div class="text-center">
+                    <button class="btn-success rounded-2 m-2" type="submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr class="bg-success w-50" style="margin-left: 500px;">
+</body>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends '../index.html' %}
+
+{% block texto %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="../../static/login.css">
+
+
+<div class="contenedor">
+    <div id="formContent">
+        <div>
+            <br>
+        {% for message in messages %}
+            <div class="alert alert-danger">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message }}
+            </div>
+        {% endfor %}
+        </div>
+        <h2 style="margin-top: 0;">registro</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" id="username" class="fadeIn second form-usuario" name="usuario" placeholder="Usuario" required>
+            <input type="password" id="password" class="fadeIn third form-contraseña" name="contraseña" placeholder="Contraseña" required>
+            <input type="password" id="password" class="fadeIn third" name="contraseña2" placeholder="Confirmar contraseña" required>
+            <input type="text"  class="fadeIn third form-apellido" name="apellido" placeholder="Apellido" required>
+            <input type="text"  class="fadeIn third form-email" name="email" placeholder="Email" required><br>
+            <h2 style="margin-top: 0;">Foto de perfil</h2>
+            <input type="file"  class=" m-1 rounded-2 bg-opacity-50 form-foto" name="imagen" value="Foto" required>
+            <input type="submit" class="fadeInfourth btn-success btn-validar" style="margin-bottom: 10px;" value="Registrarse">
+        </form>
+    </div>
+</div>
+
+{% endblock  %}

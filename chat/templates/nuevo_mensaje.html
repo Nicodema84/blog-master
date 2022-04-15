@@ -1,0 +1,38 @@
+{% extends "casilla.html" %}
+
+{% block texto %}
+  
+
+<a href="{% url 'casilla' %}" class= " m-0 p-0 text-primary"> Volver</a>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="input-group d-flex justify-content-center">
+        <div class="input-group-prepend">
+        <label class="input-group-text bg-primary text-white rounded" for="inputGroupSelect01">Enviar a</label>
+        </div>
+        <select class="custom-select w-50" id="inputGroupSelect01" name="id_receptor">
+            <option value="" disabled selected>Choose...</option>
+            {% for perfil  in perfiles  %}
+                    {% if perfil.user.id != request.user.id %}
+
+                        <option value="{{perfil.user.id}}">{{ perfil }}</option>
+
+                    {% endif %}
+            {% endfor %}
+        </select> 
+    </div>
+
+    <div class="form-group d-flex justify-content-center">
+        <div class="w-50">
+        <textarea class="form-control rounded-2 m-3" name="mensaje" id="exampleFormControlTextarea1" rows="5"></textarea>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button class="btn-primary m-3 rounded-2" type="submit">Enviar</button>
+    </div>
+</form> 
+
+
+
+{% endblock %}

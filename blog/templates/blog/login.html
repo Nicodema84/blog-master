@@ -1,0 +1,32 @@
+{% extends '../index.html' %}
+
+{% block texto %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="../../static/login.css">
+
+
+
+<div class="contenedor">
+    <div id="formContent">
+        <div>
+            <br>
+        {% for message in messages %}
+            <div class="alert alert-danger">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message }}
+            </div>
+        {% endfor %}
+        </div>
+        <form method="POST">
+        {% csrf_token %}
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+        <input type="submit" class="fadeInfourth btn-success" style="margin-bottom: 5px;" value="Log In">
+        </form>
+        <a class="mb-2" style="text-decoration:none;" href="{% url 'registro' %}">Crear usuario</a>
+
+    </div>
+</div>
+{% endblock %}

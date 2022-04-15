@@ -1,0 +1,77 @@
+{% extends '../index.html' %}
+
+{% block texto %}
+ <div class="container">
+    <div class="d-flex flex-row">
+        <h2 class="post-title">Perfil</h2>
+        <div class="p-5">
+            <h3 class="post-subtitle p-2">Nombre: {{perfil.user}} {{perfil.apellido}}</h3>
+            <h3 class="post-subtitle p-2">Email: {{ perfil.email }}</h3>
+        </div>
+
+        <div class="text-center p-5">
+            <img class="w-100 rounded float-left"  src="{{perfil.imagen.url }}">
+        </div>
+        
+
+    </div>
+</div>
+
+<h3 style="margin-left:300px; margin-bottom:50px;">Publicaciones:</h3>
+
+<div class="conteiner text-center">
+    {% for blogs in blog %}
+    <div class="text-center">
+        <h3>{{ blogs.titulo }}</h3>
+        <div class="w-50" style="margin-left: 500px;">
+            <img class="rounded mx-auto d-block w-10 img-thumbnail" style="margin-bottom: 20px;" align="left" src="../../media{{ blogs.imagen.url }}">
+            <p>{{ blogs.parrafo }}</p>
+            <h5 align="right">{{blogs.fecha}}</h5>
+        </div>
+
+    </div>
+    <br>
+    <h4 class="w-50" style="margin-left: 100px;">Comentarios:</h4>
+    <hr class="bg-success w-25" style="margin-left: 730px;">
+
+    {% for comentario in comentarios %}
+        {% if comentario.publicacion.id == blogs.id %}
+        <section style="margin-left: 650px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5 col-md-6 col-12 pb-4">
+                        <div class="text-justify darker mt-0 float-right"> 
+                            <h4>{{comentario.autor}}</h4>
+                            <p class="m-0">{{ comentario.comentario }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if comentario.autor.user.username == user.username %}
+            <a href="" class="text-danger btn-eliminar" style="margin-right: 620px;" obj-id="{{ comentario.id }}" >Eliminar</a>
+            {% endif %}
+        </section>
+        <hr class="bg-success w-25" style="margin-left: 730px;">
+        {% endif %}
+      
+    {% endfor %}
+
+    <div class="m-2 container-fluid" style= "width:100%;">
+        <div style="margin-left:500px;">
+            <form method="POST" style="width: 65%;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control rounded-2" placeholder="Ingrese un comentario" name="comentario" id="exampleFormControlTextarea1" rows="2"></textarea>
+                    <input type="hidden" name="idBlog" value="{{ blogs.id }}">
+                </div>
+                <div class="text-center">
+                    <button class="btn-success rounded-2 m-2" type="submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr class="bg-success w-50" style="margin-left: 500px;">
+
+    {% endfor %}
+
+{% endblock %}

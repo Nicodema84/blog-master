@@ -1,0 +1,92 @@
+        
+        <!-- Barra buscardor, para ordenar por autores o por publicaciones -->
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3" style="margin-left: 200px;">
+            <div class="input-group-prepend">
+            <label class="input-group-text bg-success text-white rounded" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select w-50" id="inputGroupSelect01" name="valor-busqueda">
+                <option selected value="0">Choose...</option>
+                <option value="1">Autor</option>
+                <option value="2">Publicaciones</option>
+            </select> 
+            <button class="btn-success rounded" type="submit"><i class="fa fa-search"></i></button>
+        </div>
+    </form> 
+
+            <!-- Mostrar pedido de busqueda  -->
+
+            {% if papa %}
+            <div class="text-center"> 
+              <h4>Ingrese un valor de busqueda</h4>
+            </div>
+            {% endif %}
+
+
+
+            <!-- Mostrar autores -->
+
+        {% if perfil == 'None' %}
+
+            <h3>No hay perfiles</h3>
+          
+        {% endif %}
+
+
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                {% if valor == "1" %}
+                <h2 class="post-title">Autores:</h2>
+                {% endif %}                
+                {% for perfiles in perfil %}
+                {% if not user.username == perfiles.user.username %}
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'blog' perfiles.id %}">
+                            <img src="" alt="">
+                            <h2 class="post-title">  {{perfiles.user}} {{ perfiles.apellido }}</h2>
+                            <h3 class="post-subtitle">Email: {{ perfiles.email }}</h3>
+                            <img class="rounded mx-auto d-block w-10"  src="{{perfiles.imagen.url }}">
+                        </a>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                </div>       
+                {% endif %}         
+                {% endfor %}                    
+
+            </div>
+        </div>
+
+            <!-- Mostrar publicaciones -->
+
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                {% if valor == "2" %}
+                <h2 class="post-title">Publicaciones:</h2>
+                {% endif %}
+                <div class="text-center mt-3">
+                    <h3>{{ error }}</h3>
+                </div>
+                {% for publicaciones in publicacion %}
+                {% if not user.username == publicaciones.autor.user.username %}
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'publicacion' publicaciones.id %}">
+                            <h2 class="post-title">{{ publicaciones.titulo }}</h2>
+                            <h3 class="post-subtitle">{{ publicaciones.presentacion }}</h3>
+                            <h3 class="post-subtitle"> <b>Autor:</b> {{ publicaciones.autor }}</h3>
+                            <img class="rounded mx-auto d-block w-10"  src="media/{{ publicaciones.imagen.url }}">
+                        </a>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                </div>       
+                {% endif %}         
+                {% endfor %}                    
+            </div>
+        </div>
